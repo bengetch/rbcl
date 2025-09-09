@@ -1,7 +1,7 @@
 package rbcl
 
 /*
-#include "sodium/crypto_core_ristretto255.h"
+int crypto_core_ristretto255_bytes(void);
 */
 import "C"
 

@@ -19,6 +19,9 @@ jobs:
           - os: macos-latest
             arch: arm64
             triplet: darwin-arm64
+          - os: macos-latest
+            arch: amd64
+            triplet: darwin-amd64
 
     runs-on: ${{ matrix.os }}
     defaults:
@@ -34,8 +37,19 @@ jobs:
         if: runner.os == 'macOS'
         run: brew install autoconf automake libtool
 
+      - name: Configure & build (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          export CFLAGS="-mmacosx-version-min=13.0"
+          export LDFLAGS="-mmacosx-version-min=13.0"
+          cd libsodium
+          ./autogen.sh || true
+          ./configure --disable-shared --enable-static --host=${{ matrix.arch }}-unknown-linux-gnu --prefix=$PWD/dist
+          make -j$(nproc || sysctl -n hw.ncpu)
+          make install
+
       - name: Configure & Build (Unix)
-        if: runner.os != 'Windows'
+        if: runner.os == 'Linux'
         run: |
           cd libsodium
           ./autogen.sh || true

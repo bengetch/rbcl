@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'libsodium/**'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 permissions:

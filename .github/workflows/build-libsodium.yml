@@ -50,10 +50,6 @@ jobs:
         if: runner.os == 'macOS'
         run: brew install autoconf automake libtool
 
-      - name: install build deps (windows)
-        if: runner.os == 'Windows'
-        uses: microsoft/setup-msbuild@v1.3
-
       - name: configure & build (linux)
         if: runner.os == 'Linux'
         run: |
@@ -74,12 +70,13 @@ jobs:
           make -j$(nproc || sysctl -n hw.ncpu)
           make install
 
-      - name: configure & build (Windows)
+      - name: configure & build (windows)
         if: runner.os == 'Windows'
-        shell: cmd
+        shell: pwsh
         run: |
-          cd libsodium/builds/msvc
-          msbuild libsodium.sln /p:Configuration=Release /p:Platform=x64
+          cd libsodium
+          cmake -S . -B build -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=dist
+          cmake --build build --config Release --target install
 
       - name: copy artifact (linux/macos)
         run: |

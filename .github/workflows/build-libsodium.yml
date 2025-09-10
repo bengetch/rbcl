@@ -76,6 +76,7 @@ jobs:
 
       - name: configure & build (Windows)
         if: runner.os == 'Windows'
+        shell: cmd
         run: |
           cd libsodium/builds/msvc
           msbuild libsodium.sln /p:Configuration=Release /p:Platform=x64

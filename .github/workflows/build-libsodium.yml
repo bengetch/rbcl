@@ -28,9 +28,6 @@ jobs:
         - os: macos-latest
           arch: arm64
           triplet: arm64-apple-darwin
-        - os: windows-latest
-          arch: amd64
-          triplet: x86_64-w64-mingw32
 
     runs-on: ${{ matrix.os }}
     defaults:
@@ -70,24 +67,10 @@ jobs:
           make -j$(nproc || sysctl -n hw.ncpu)
           make install
 
-      - name: configure & build (windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          cd libsodium
-          cmake -S . -B build -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=dist
-          cmake --build build --config Release --target install
-
-      - name: copy artifact (linux/macos)
+      - name: copy artifact
         run: |
           mkdir -p prebuilt/${{ matrix.triplet }}
           cp libsodium/dist/lib/libsodium.a prebuilt/${{ matrix.triplet }}/
-
-      - name: copy artifact (windows)
-        if: runner.os == 'Windows'
-        run: |
-          mkdir -p prebuilt/x86_64-w64-mingw32
-          cp "libsodium/bin/x64/Release/v142/static/libsodium.lib" prebuilt/x86_64-w64-mingw32/
 
       - name: upload artifact
         uses: actions/upload-artifact@v4

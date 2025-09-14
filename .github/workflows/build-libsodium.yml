@@ -6,13 +6,13 @@ on:
       - main
     paths:
       - 'libsodium/**'
-      - '.github/workflows/**'
+      - '.github/workflows/build-libsodium.yml'
   push:
     branches:
       - main
     paths:
       - 'libsodium/**'
-      - '.github/workflows/**'
+      - '.github/workflows/build-libsodium.yml'
   workflow_dispatch:
 
 permissions:

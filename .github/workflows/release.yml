@@ -5,6 +5,9 @@ on:
     tags:
       - 'v*'   # runs only when you push tags like v1.0.0
 
+permissions:
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest

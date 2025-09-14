@@ -1,6 +1,6 @@
 # rbcl
 Go library that bundles [libsodium](https://github.com/jedisct1/libsodium) and provides wrappers
-for its Ristretto group functions. This library is based on the python [implementation] of the same.
+for its Ristretto group functions. This library is based on the python [implementation](https://github.com/nthparty/rbcl) of the same.
 
 ### installation and usage
 

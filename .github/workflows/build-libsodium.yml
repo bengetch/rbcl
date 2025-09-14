@@ -1,7 +1,15 @@
 name: Build libsodium
 
 on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'libsodium/**'
+      - '.github/workflows/**'
   push:
+    branches:
+      - main
     paths:
       - 'libsodium/**'
       - '.github/workflows/**'
@@ -83,6 +91,9 @@ jobs:
     needs: build
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
       - name: download all artifacts
         uses: actions/download-artifact@v4
         with:

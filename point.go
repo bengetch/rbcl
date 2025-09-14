@@ -17,7 +17,7 @@ import (
 
 // CryptoCoreRistretto255IsValidPoint returns true if p encodes a valid Ristretto255 point
 func CryptoCoreRistretto255IsValidPoint(p []byte) bool {
-	if len(p) != CryptoCoreRistretto255Bytes() {
+	if len(p) != CryptoCoreRistretto255Bytes {
 		return false
 	}
 
@@ -29,7 +29,7 @@ func CryptoCoreRistretto255IsValidPoint(p []byte) bool {
 
 // CryptoCoreRistretto255Random returns a new random valid Ristretto255 point
 func CryptoCoreRistretto255Random() []byte {
-	buf := make([]byte, CryptoCoreRistretto255Bytes())
+	buf := make([]byte, CryptoCoreRistretto255Bytes)
 	C.crypto_core_ristretto255_random(
 		(*C.uchar)(unsafe.Pointer(&buf[0])),
 	)
@@ -38,12 +38,12 @@ func CryptoCoreRistretto255Random() []byte {
 
 // CryptoCoreRistretto255FromHash maps a 64-byte hash to a Ristretto255 point
 func CryptoCoreRistretto255FromHash(h []byte) ([]byte, error) {
-	reqLen := CryptoCoreRistretto255HashBytes()
+	reqLen := CryptoCoreRistretto255HashBytes
 	if len(h) != reqLen {
 		return nil, ErrBadHashLength
 	}
 
-	out := make([]byte, CryptoCoreRistretto255Bytes())
+	out := make([]byte, CryptoCoreRistretto255Bytes)
 	rc := C.crypto_core_ristretto255_from_hash(
 		(*C.uchar)(unsafe.Pointer(&out[0])),
 		(*C.uchar)(unsafe.Pointer(&h[0])),
@@ -56,12 +56,11 @@ func CryptoCoreRistretto255FromHash(h []byte) ([]byte, error) {
 
 // CryptoCoreRistretto255Add returns the sum of two Ristretto255 points
 func CryptoCoreRistretto255Add(p []byte, q []byte) ([]byte, error) {
-	reqLen := CryptoCoreRistretto255Bytes()
-	if (len(p) != reqLen) || (len(q) != reqLen) {
+	if (len(p) != CryptoCoreRistretto255Bytes) || (len(q) != CryptoCoreRistretto255Bytes) {
 		return nil, ErrBadPointLength
 	}
 
-	out := make([]byte, CryptoCoreRistretto255Bytes())
+	out := make([]byte, CryptoCoreRistretto255Bytes)
 	rc := C.crypto_core_ristretto255_add(
 		(*C.uchar)(unsafe.Pointer(&out[0])),
 		(*C.uchar)(unsafe.Pointer(&p[0])),
@@ -75,12 +74,11 @@ func CryptoCoreRistretto255Add(p []byte, q []byte) ([]byte, error) {
 
 // CryptoCoreRistretto255Sub returns the difference between two Ristretto255 points
 func CryptoCoreRistretto255Sub(p []byte, q []byte) ([]byte, error) {
-	reqLen := CryptoCoreRistretto255Bytes()
-	if (len(p) != reqLen) || (len(q) != reqLen) {
+	if (len(p) != CryptoCoreRistretto255Bytes) || (len(q) != CryptoCoreRistretto255Bytes) {
 		return nil, ErrBadPointLength
 	}
 
-	out := make([]byte, CryptoCoreRistretto255Bytes())
+	out := make([]byte, CryptoCoreRistretto255Bytes)
 	rc := C.crypto_core_ristretto255_sub(
 		(*C.uchar)(unsafe.Pointer(&out[0])),
 		(*C.uchar)(unsafe.Pointer(&p[0])),
@@ -94,12 +92,11 @@ func CryptoCoreRistretto255Sub(p []byte, q []byte) ([]byte, error) {
 
 // CryptoScalarMultRistretto255Base returns the product of a standard group element and a scalar s
 func CryptoScalarMultRistretto255Base(s []byte) ([]byte, error) {
-	reqLen := CryptoCoreRistretto255ScalarBytes()
-	if len(s) != reqLen {
+	if len(s) != CryptoCoreRistretto255ScalarBytes {
 		return nil, ErrBadScalarLength
 	}
 
-	out := make([]byte, CryptoScalarMultRistretto255Bytes())
+	out := make([]byte, CryptoScalarMultRistretto255Bytes)
 	rc := C.crypto_scalarmult_ristretto255_base(
 		(*C.uchar)(unsafe.Pointer(&out[0])),
 		(*C.uchar)(unsafe.Pointer(&s[0])),
@@ -117,16 +114,14 @@ func CryptoScalarMultRistretto255Base(s []byte) ([]byte, error) {
 // The scalar is clamped, as done in the public key generation case, by setting to zero the bits
 // in position [0, 1, 2, 255] and by setting to 1 the bit in position 254
 func CryptoScalarMultRistretto255(s, p []byte) ([]byte, error) {
-	reqLen := CryptoCoreRistretto255ScalarBytes()
-	if len(s) != reqLen {
+	if len(s) != CryptoCoreRistretto255ScalarBytes {
 		return nil, ErrBadScalarLength
 	}
-	reqLen = CryptoCoreRistretto255Bytes()
-	if len(p) != reqLen {
+	if len(p) != CryptoCoreRistretto255Bytes {
 		return nil, ErrBadPointLength
 	}
 
-	out := make([]byte, CryptoScalarMultRistretto255Bytes())
+	out := make([]byte, CryptoScalarMultRistretto255Bytes)
 	rc := C.crypto_scalarmult_ristretto255(
 		(*C.uchar)(unsafe.Pointer(&out[0])),
 		(*C.uchar)(unsafe.Pointer(&s[0])),

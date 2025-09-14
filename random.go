@@ -24,8 +24,7 @@ func RandomBytes(n int) []byte {
 // RandomBytesDeterministic returns a slice of length n filled with random bytes derived
 // deterministically from a seed
 func RandomBytesDeterministic(n int, seed []byte) ([]byte, error) {
-	reqLen := RandomBytesSeedBytes()
-	if len(seed) != reqLen {
+	if len(seed) != RandomBytesSeedBytes {
 		return nil, ErrBadSeedLength
 	}
 

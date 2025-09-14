@@ -75,7 +75,7 @@ func TestRandomBytesDeterministic(t *testing.T) {
 			name: "TestRandomBytesDeterministicZero",
 			len:  0,
 			seed: func() []byte {
-				return RandomBytes(RandomBytesSeedBytes())
+				return RandomBytes(RandomBytesSeedBytes)
 			},
 			err: nil,
 		},
@@ -83,7 +83,7 @@ func TestRandomBytesDeterministic(t *testing.T) {
 			name: "TestRandomBytesDeterministicEight",
 			len:  8,
 			seed: func() []byte {
-				return RandomBytes(RandomBytesSeedBytes())
+				return RandomBytes(RandomBytesSeedBytes)
 			},
 			err: nil,
 		},
@@ -91,7 +91,7 @@ func TestRandomBytesDeterministic(t *testing.T) {
 			name: "TestRandomBytesDeterministicSixteen",
 			len:  16,
 			seed: func() []byte {
-				return RandomBytes(RandomBytesSeedBytes())
+				return RandomBytes(RandomBytesSeedBytes)
 			},
 			err: nil,
 		},

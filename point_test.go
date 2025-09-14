@@ -62,12 +62,12 @@ func TestCryptoCoreRistretto255FromHash(t *testing.T) {
 	}{
 		{
 			name: "TestCryptoCoreRistretto255FromHash success",
-			h:    func() []byte { return bytes.Repeat([]byte{0x70}, CryptoCoreRistretto255HashBytes()) },
+			h:    func() []byte { return bytes.Repeat([]byte{0x70}, CryptoCoreRistretto255HashBytes) },
 			err:  nil,
 		},
 		{
 			name: "TestCryptoCoreRistretto255FromHash fail",
-			h:    func() []byte { return bytes.Repeat([]byte{0x70}, CryptoCoreRistretto255HashBytes()-8) },
+			h:    func() []byte { return bytes.Repeat([]byte{0x70}, CryptoCoreRistretto255HashBytes-8) },
 			err:  ErrBadHashLength,
 		},
 	}
@@ -101,21 +101,21 @@ func TestCryptoCoreRistretto255Add(t *testing.T) {
 			p:    func() []byte { return CryptoCoreRistretto255Random() },
 			q: func() []byte {
 				q, _ := CryptoCoreRistretto255FromHash(
-					bytes.Repeat([]byte{0x70}, CryptoCoreRistretto255HashBytes()),
+					bytes.Repeat([]byte{0x70}, CryptoCoreRistretto255HashBytes),
 				)
 				return q
 			},
 		},
 		{
 			name: "TestCryptoCoreRistretto255Add fail one",
-			p:    func() []byte { return RandomBytes(CryptoCoreRistretto255Bytes() - 8) },
+			p:    func() []byte { return RandomBytes(CryptoCoreRistretto255Bytes - 8) },
 			q:    func() []byte { return CryptoCoreRistretto255Random() },
 			err:  ErrBadPointLength,
 		},
 		{
 			name: "TestCryptoCoreRistretto255Add fail two",
 			p:    func() []byte { return CryptoCoreRistretto255Random() },
-			q:    func() []byte { return RandomBytes(CryptoCoreRistretto255Bytes() - 8) },
+			q:    func() []byte { return RandomBytes(CryptoCoreRistretto255Bytes - 8) },
 			err:  ErrBadPointLength,
 		},
 	}
@@ -160,7 +160,7 @@ func TestCryptoCoreRistretto255Sub(t *testing.T) {
 			p:    func() []byte { return CryptoCoreRistretto255Random() },
 			q: func() []byte {
 				q, err := CryptoCoreRistretto255FromHash(
-					bytes.Repeat([]byte{0x70}, CryptoCoreRistretto255HashBytes()),
+					bytes.Repeat([]byte{0x70}, CryptoCoreRistretto255HashBytes),
 				)
 				if err != nil {
 					panic(err)
@@ -170,14 +170,14 @@ func TestCryptoCoreRistretto255Sub(t *testing.T) {
 		},
 		{
 			name: "TestCryptoCoreRistretto255Sub fail one",
-			p:    func() []byte { return RandomBytes(CryptoCoreRistretto255Bytes() - 8) },
+			p:    func() []byte { return RandomBytes(CryptoCoreRistretto255Bytes - 8) },
 			q:    func() []byte { return CryptoCoreRistretto255Random() },
 			err:  ErrBadPointLength,
 		},
 		{
 			name: "TestCryptoCoreRistretto255Sub fail two",
 			p:    func() []byte { return CryptoCoreRistretto255Random() },
-			q:    func() []byte { return RandomBytes(CryptoCoreRistretto255Bytes() - 8) },
+			q:    func() []byte { return RandomBytes(CryptoCoreRistretto255Bytes - 8) },
 			err:  ErrBadPointLength,
 		},
 	}
@@ -217,7 +217,7 @@ func TestCryptoScalarMultRistretto255Base(t *testing.T) {
 		{
 			name: "TestCryptoScalarMultRistretto255Base fail",
 			s: func() []byte {
-				return RandomBytes(CryptoCoreRistretto255ScalarBytes() - 8)
+				return RandomBytes(CryptoCoreRistretto255ScalarBytes - 8)
 			},
 			err: ErrBadScalarLength,
 		},
@@ -254,7 +254,7 @@ func TestCryptoScalarMultRistretto255(t *testing.T) {
 		{
 			name: "TestCryptoScalarMultRistretto255 fail one",
 			s: func() []byte {
-				return RandomBytes(CryptoCoreRistretto255ScalarBytes() - 8)
+				return RandomBytes(CryptoCoreRistretto255ScalarBytes - 8)
 			},
 			p: func() []byte {
 				return CryptoCoreRistretto255Random()
@@ -267,7 +267,7 @@ func TestCryptoScalarMultRistretto255(t *testing.T) {
 				return CryptoCoreRistretto255ScalarRandom()
 			},
 			p: func() []byte {
-				return RandomBytes(CryptoCoreRistretto255Bytes() - 8)
+				return RandomBytes(CryptoCoreRistretto255Bytes - 8)
 			},
 			err: ErrBadPointLength,
 		},

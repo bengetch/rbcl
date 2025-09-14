@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'   # runs only when you push tags like v1.0.0
+      - 'v*'
 
 permissions:
   contents: write
